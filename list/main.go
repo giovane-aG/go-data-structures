@@ -22,7 +22,7 @@ func (l *List) insertAtTheEnd(newNode *Node) {
 		l.Size = l.Size + 1
 		return
 	}
-
+	// list size is bigger than zero
 	l.Last.Next = newNode
 	newNode.Previous = l.Last
 	l.Last = newNode
