@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 )
 
 type Node struct {
@@ -31,35 +32,58 @@ func (b *BinaryTree) insert(newNode *Node, currentNode *Node) {
 
 	if newNode.Value > currentNode.Value {
 		if currentNode.Right == nil {
-			fmt.Printf("inserted the new node in the right of %v\n", currentNode.Value)
+			fmt.Printf("inserted %v in the right of %v\n", newNode.Value, currentNode.Value)
 			currentNode.Right = newNode
 			newNode.Parent = currentNode
 			return
 		}
 
-		fmt.Printf("called b.insert in the right node of %c\n", currentNode.Value)
+		fmt.Printf("called b.insert in the right node of %v\n", currentNode.Value)
 		b.insert(newNode, currentNode.Right)
 	}
 
 	if newNode.Value < currentNode.Value {
 		// calls insert wiht the currentNode.left
 		if currentNode.Left == nil {
-			fmt.Printf("inserted the new node in the left of %v\n", currentNode.Value)
+			fmt.Printf("inserted %v in the left of %v\n", newNode.Value, currentNode.Value)
 			currentNode.Left = newNode
 			newNode.Parent = currentNode
 			return
 		}
-		fmt.Printf("called b.insert in the left node of %c\n", currentNode.Value)
+		fmt.Printf("called b.insert in the left node of %v\n", currentNode.Value)
 		b.insert(newNode, currentNode.Left)
 	}
 }
 
-func main() {
-	var myTree *BinaryTree
+func (b *BinaryTree) inOrderTransversal() {
+	node := b.Root
+	b.inOrderTransversalRecursivily(node)
+}
 
-	for i := 0; i < 5; i++ {
-		var node Node
-		node.Value = 10
-		myTree.insertRecursivily(&node)
+func (b *BinaryTree) inOrderTransversalRecursivily(node *Node) {
+	if node != nil {
+		b.inOrderTransversalRecursivily(node.Left)
+		fmt.Println(node.Value)
+		b.inOrderTransversalRecursivily(node.Right)
 	}
+}
+
+func CreateTree(rootValue int) *BinaryTree {
+	var tree BinaryTree
+	var root Node
+	root.Value = rootValue
+	tree.Root = &root
+	return &tree
+}
+
+func main() {
+	tree := CreateTree(10)
+
+	for i := 0; i < 10; i++ {
+		var node Node
+		node.Value = rand.Intn(50)
+		tree.insertRecursivily(&node)
+	}
+
+	tree.inOrderTransversal()
 }
