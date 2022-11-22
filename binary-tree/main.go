@@ -12,11 +12,19 @@ type Node struct {
 	Parent *Node
 }
 
+func (n Node) hasLeftNode() bool {
+	return n.Left != nil
+}
+
+func (n Node) hasRightNode() bool {
+	return n.Right != nil
+}
+
 type BinaryTree struct {
 	Root *Node
 }
 
-func (b *BinaryTree) insertRecursivily(newNode *Node) {
+func (b *BinaryTree) insertRecursively(newNode *Node) {
 	var currentNode *Node
 
 	if b.Root == nil {
@@ -60,7 +68,7 @@ func (b *BinaryTree) inOrderTransversal() {
 	b.inOrderTransversalRecursivily(node)
 }
 
-func (b *BinaryTree) inOrderTransversalRecursivily(node *Node) {
+func (b *BinaryTree) inOrderTransversalRecursively(node *Node) {
 	if node != nil {
 		b.inOrderTransversalRecursivily(node.Left)
 		fmt.Println(node.Value)
